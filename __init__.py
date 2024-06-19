@@ -5,7 +5,7 @@ bl_info = {
     "version": (1, 0, 0),
     "author": "Your Name",
     "description": "Adds GTA V colour attributes to selected objects.",
-    "location": "View3D > Tool",
+    "location": "Properties > Data > Color Attributes",
     "warning": "",
     "wiki_url": "",
     "tracker_url": "",
@@ -48,12 +48,13 @@ class OBJECT_OT_add_ped_colours(bpy.types.Operator):
         return {'FINISHED'}
 
 # Panel to contain the button
-class VIEW3D_PT_ped_colours(bpy.types.Panel):
-    bl_idname = "VIEW3D_PT_ped_colours"
+class MESH_PT_ped_colours(bpy.types.Panel):
+    bl_idname = "MESH_PT_ped_colours"
     bl_label = "GTA V Colour Attributes"
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'Tool'  # Default category
+    bl_space_type = 'PROPERTIES'
+    bl_region_type = 'WINDOW'
+    bl_context = 'data'
+    bl_order = 10  # Order within the panel
 
     def draw(self, context):
         layout = self.layout
@@ -62,15 +63,11 @@ class VIEW3D_PT_ped_colours(bpy.types.Panel):
 # Register and Unregister the classes
 def register():
     bpy.utils.register_class(OBJECT_OT_add_ped_colours)
-    bpy.utils.register_class(VIEW3D_PT_ped_colours)
-
-    # Place in the Sollumz Tools tab if it exists
-    if 'Sollumz_Tools' in dir(bpy.types):
-        VIEW3D_PT_ped_colours.bl_category = 'Sollumz Tools'
+    bpy.utils.register_class(MESH_PT_ped_colours)
 
 def unregister():
     bpy.utils.unregister_class(OBJECT_OT_add_ped_colours)
-    bpy.utils.unregister_class(VIEW3D_PT_ped_colours)
+    bpy.utils.unregister_class(MESH_PT_ped_colours)
 
 if __name__ == "__main__":
     register()
